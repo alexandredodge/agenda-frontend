@@ -1,0 +1,72 @@
+<mat-toolbar>
+    <mat-icon>account_circle</mat-icon>
+    Contatos
+</mat-toolbar>
+
+<mat-tab-group>
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon>list</mat-icon>
+            Todos
+        </ng-template>
+        <mat-card>
+
+            <table mat-table [dataSource]='listaDecontatos'> 
+
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef> ID </th>
+                    <td mat-cell *matCellDef="let contato"> {{contato.id}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="nome">
+                    <th mat-header-cell *matHeaderCellDef>Nome</th>
+                    <td mat-cell *matCellDef="let contato"> {{contato.nome}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef>Email</th>
+                    <td mat-cell *matCellDef="let contato"> {{contato.email}} </td>
+                </ng-container>
+
+            </table>
+
+        </mat-card>
+    </mat-tab>
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon>face</mat-icon>
+            Novo
+        </ng-template>
+        <mat-card class="half-width">
+            <mat-card-title>Novo Contato</mat-card-title>
+            <form [formGroup]="formulario" (ngSubmit)="saveContato()">
+                <mat-form-field class="full-width">
+                    <mat-label>Nome:</mat-label>
+                    <input formControlName="nome" matInput placeholder="Digite seu nome" />
+                    
+                </mat-form-field>
+                <div *ngIf="formulario.controls.nome.errors">
+                    <div *ngIf="formulario.controls.nome.errors.required">
+                        Campo nome é obrigatório.
+                    </div>
+                </div>
+            
+                <mat-form-field class="full-width">
+                    <mat-label>E-mail</mat-label>
+                    <input formControlName="email" matInput placeholder="Digite seu e-mail" >
+                </mat-form-field>
+                <div *ngIf="formulario.controls.email.errors">
+                    <div *ngIf="formulario.controls.email.errors.email">
+                        Campo email é inválido.
+                    </div>
+                    <div *ngIf="formulario.controls.email.errors.required">
+                        Campo email é obrigatório.
+                    </div>
+                </div>
+                <button  mat-button color="primary">Adicionar</button>
+            </form>
+        </mat-card>
+    </mat-tab>
+</mat-tab-group>
+
+
