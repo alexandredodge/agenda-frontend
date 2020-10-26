@@ -16,6 +16,10 @@ export class ContatoComponent implements OnInit {
   formulario: FormGroup;
   listaDecontatos: Contato[] = [];
   colunas = ['foto','id','nome','email','favorito'];
+  totalDeElementos = 0;
+  pagina = 0;
+  tamanho = 5;
+  pageSizeOptions : number[] = [5];
 
   constructor(
     private service:ContatoService,
@@ -25,7 +29,7 @@ export class ContatoComponent implements OnInit {
 
   ngOnInit(): void {
       this.configurarFormulario();
-	  this.listarContatos();
+	  this.listarContatos(this.pagina,this.tamanho);
   }
 
   favoritar(contato: Contato){debugger
@@ -41,9 +45,11 @@ export class ContatoComponent implements OnInit {
 	  })
   }
 
-  listarContatos(){
-	  this.service.list().subscribe( retornoRet =>{
-		  this.listaDecontatos = retornoRet;
+  listarContatos(pagina, tamanho){
+	  this.service.list(pagina,tamanho).subscribe( resposta =>{
+        this.listaDecontatos = resposta.content;
+        this.totalDeElementos = resposta.totalElements;
+        this.pagina = resposta.number;
 	  } )
   }
 
