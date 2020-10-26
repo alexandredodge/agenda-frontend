@@ -28,9 +28,9 @@ export class ContatoComponent implements OnInit {
 	  this.listarContatos();
   }
 
-  favoritar(contato: Contato){
+  favoritar(contato: Contato){debugger
 	this.service.favorite(contato).subscribe( respostaRet =>{
-		contato.favorito = !contato.favorito;
+		contato.favorito = !contato.favorito;//recebe o contrario do valor atual
 	})  
   }
 
